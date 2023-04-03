@@ -20,7 +20,7 @@ public class MailChimpSignUpStepdefs {
 
     @After
     public void tearDown() {
-
+        mailChimpSignUpDriver.driver.quit();
     }
 
     @Given("I opened Mailchimp signup in {string}")
@@ -35,7 +35,6 @@ public class MailChimpSignUpStepdefs {
         String expected = "";
         if (emailAddress.equals("true")) {
             expected = mailChimpSignUpDriver.setEmail();
-        } else {
         }
         assertEquals(expected, mailChimpSignUpDriver.getEmail());
     }

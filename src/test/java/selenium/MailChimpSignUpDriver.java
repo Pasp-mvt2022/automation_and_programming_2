@@ -1,6 +1,5 @@
 package selenium;
 
-import io.cucumber.core.internal.com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.openqa.selenium.*;
 
@@ -13,26 +12,22 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 import java.util.Random;
-import java.util.UUID;
-
-import static org.junit.Assert.assertEquals;
 
 public class MailChimpSignUpDriver {
 
     WebDriver driver;
     public MailChimpSignUpDriver() {
-
+        System.setProperty("webdriver.chrome.driver", "C:\\Users\\peras\\Selenium\\chromedriver.exe");
+        System.setProperty("webdriver.edge.driver", "C:\\Users\\peras\\Selenium\\msedgedriver.exe");
     }
 
     @Test
     public void setDriver(String browser) {
         if (browser.equals("chrome")) {
-            System.setProperty("webdriver.chrome.driver", "C:\\Users\\peras\\Selenium\\chromedriver.exe");
             ChromeOptions chromeOptions = new ChromeOptions();
             chromeOptions.addArguments("--remote-allow-origins=*");
             driver = new ChromeDriver(chromeOptions);
         } else {
-            System.setProperty("webdriver.edge.driver", "C:\\Users\\peras\\Selenium\\msedgedriver.exe");
             EdgeOptions edgeOptions = new EdgeOptions();
             edgeOptions.addArguments("--remote-allow-origins=*");
             driver = new EdgeDriver(edgeOptions);
@@ -44,7 +39,6 @@ public class MailChimpSignUpDriver {
         driver.get("https://login.mailchimp.com/signup/");
     }
 
-    @Test
     public String getPageTitle() {
         return driver.getTitle();
     }
@@ -62,7 +56,6 @@ public class MailChimpSignUpDriver {
         return "peras" + (random.nextInt(1000)*1000) + "@mailchimp.com";
     }
 
-    @Test
     public String getEmail() {
         WebElement email = driver.findElement(By.id("email"));
         return email.getAttribute("value");
@@ -70,7 +63,7 @@ public class MailChimpSignUpDriver {
 
     @Test
     public String setUsername(String random, String tooLong) {
-        String userName = "";
+        String userName;
         if (random.equals("random")) {
             userName = generateRandomUserName(tooLong);
         } else {
@@ -98,7 +91,6 @@ public class MailChimpSignUpDriver {
         return "peras123456789";
     }
 
-    @Test
     public String getUsername() {
         WebElement userName = driver.findElement(By.name("username"));
         return userName.getAttribute("value");
@@ -118,7 +110,6 @@ public class MailChimpSignUpDriver {
         passWordField.sendKeys(password);
     }
 
-    @Test
     public String getPassword() {
         WebElement passWordField = driver.findElement(By.id("new_password"));
         return passWordField.getAttribute("value");
