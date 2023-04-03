@@ -21,7 +21,6 @@ public class MailChimpSignUpDriver {
         System.setProperty("webdriver.edge.driver", "C:\\Users\\peras\\Selenium\\msedgedriver.exe");
     }
 
-    @Test
     public void setDriver(String browser) {
         if (browser.equals("chrome")) {
             ChromeOptions chromeOptions = new ChromeOptions();
@@ -34,7 +33,6 @@ public class MailChimpSignUpDriver {
         }
     }
 
-    @Test
     public void openPage() {
         driver.get("https://login.mailchimp.com/signup/");
     }
@@ -43,7 +41,6 @@ public class MailChimpSignUpDriver {
         return driver.getTitle();
     }
 
-    @Test
     public String setEmail() {
         WebElement emailField = driver.findElement(By.id("email"));
         String email = generateRandomEmail();
@@ -61,7 +58,6 @@ public class MailChimpSignUpDriver {
         return email.getAttribute("value");
     }
 
-    @Test
     public String setUsername(String random, String tooLong) {
         String userName;
         if (random.equals("random")) {
@@ -96,7 +92,6 @@ public class MailChimpSignUpDriver {
         return userName.getAttribute("value");
     }
 
-    @Test
     public void clickSignUp() {
         WebElement buttonSignup = driver.findElement(By.id("create-account-enabled"));
         WebElement marketingCheckbox = driver.findElement(By.name("marketing_newsletter"));
@@ -104,7 +99,6 @@ public class MailChimpSignUpDriver {
         buttonSignup.click();
     }
 
-    @Test
     public void setPassword(String password) {
         WebElement passWordField = driver.findElement(By.id("new_password"));
         passWordField.sendKeys(password);
@@ -115,7 +109,6 @@ public class MailChimpSignUpDriver {
         return passWordField.getAttribute("value");
     }
 
-    @Test
     public String getCreated() {
         waitForCaptchaInputOrFailure();
         boolean isCreated = driver.getTitle().equals("Success | Mailchimp");
