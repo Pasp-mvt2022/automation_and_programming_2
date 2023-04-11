@@ -6,10 +6,10 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.*;
 import org.openqa.selenium.edge.*;
 
-import org.junit.Test;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.rmi.UnexpectedException;
 import java.time.Duration;
 import java.util.Random;
 
@@ -109,10 +109,17 @@ public class MailChimpSignUpDriver {
         return passWordField.getAttribute("value");
     }
 
-    public String getCreated() {
+    public String getCreated() throws UnexpectedException {
         waitForCaptchaInputOrFailure();
-        boolean isCreated = driver.getTitle().equals("Success | Mailchimp");
-        return Boolean.toString(isCreated);
+
+            if (driver.getTitle().equals("Success | Mailchimp")) {
+                return "true";
+            } else if (!driver.findElements(By.id("av-flash-errors")).isEmpty()) {
+                return "false";
+            } else if (!driver.findElements(By.className("invalid-error")).isEmpty()) {
+                return "false";
+            }
+        throw new UnexpectedException("Non expected result on account creation!");
     }
 
     private void waitForCaptchaInputOrFailure() {

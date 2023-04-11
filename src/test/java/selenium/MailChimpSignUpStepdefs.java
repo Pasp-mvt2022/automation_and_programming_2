@@ -7,6 +7,8 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
+import java.rmi.UnexpectedException;
+
 import static org.junit.Assert.assertEquals;
 
 public class MailChimpSignUpStepdefs {
@@ -58,6 +60,10 @@ public class MailChimpSignUpStepdefs {
 
     @Then("the account creation is {string}")
     public void theAccountCreationIs(String created) {
-        assertEquals(created, mailChimpSignUpDriver.getCreated());
+        try {
+            assertEquals(created, mailChimpSignUpDriver.getCreated());
+        } catch (UnexpectedException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
